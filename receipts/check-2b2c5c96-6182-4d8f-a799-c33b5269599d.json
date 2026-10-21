@@ -1,0 +1,42 @@
+{
+  "classifications": [
+    {
+      "classification": "ready",
+      "eventId": "event-001",
+      "issueId": "LOCAL-001",
+      "proposedAction": "After human approval, add the local check command and expected output to the project docs.",
+      "reason": "The command and expected report fields are known; document them without adding integrations.",
+      "refusedAction": "Execute the proposal: After human approval, add the local check command and expected output to the project docs.",
+      "nextAllowedAction": "Present this proposal to a human for approval; do not execute it.",
+      "stopReason": "Proposal only: VISION.md requires approval before any implementation."
+    },
+    {
+      "classification": "approval-required",
+      "eventId": "event-002",
+      "issueId": "LOCAL-002",
+      "proposedAction": "Ask a human to approve or reject moving the default queue from data/issue-events.jsonl to issues.jsonl.",
+      "reason": "A human must decide whether changing the input path is acceptable before any code or issue data changes.",
+      "refusedAction": "Execute the proposal: Ask a human to approve or reject moving the default queue from data/issue-events.jsonl to issues.jsonl.",
+      "nextAllowedAction": "Present the decision request to a human; wait for approval.",
+      "stopReason": "Human decision required: A human must decide whether changing the input path is acceptable before any code or issue data changes."
+    },
+    {
+      "classification": "input-required",
+      "eventId": "event-003",
+      "issueId": "LOCAL-003",
+      "proposedAction": "Ask a human for the staleness threshold and timestamp source before proposing an implementation.",
+      "reason": "No age threshold or reference timestamp has been specified. Ask which threshold and timestamp to use.",
+      "refusedAction": "Execute the proposal: Ask a human for the staleness threshold and timestamp source before proposing an implementation.",
+      "nextAllowedAction": "Present the clarification request to a human; do not guess.",
+      "stopReason": "Missing information: No age threshold or reference timestamp has been specified. Ask which threshold and timestamp to use."
+    }
+  ],
+  "complete": true,
+  "eventCount": 3,
+  "fileRead": "/workspace/data/issue-events.jsonl",
+  "mode": "proposal-only",
+  "nextAllowedAction": "Review findings with a human. Only dedicated receipts and run logs may be written.",
+  "refusedAction": "Change issue inputs or project code, run implementation agents, or contact external services.",
+  "stopReason": "Check complete; no proposed actions were executed.",
+  "receiptFile": "/workspace/receipts/check-2b2c5c96-6182-4d8f-a799-c33b5269599d.json"
+}

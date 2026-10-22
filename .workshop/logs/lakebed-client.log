@@ -1,0 +1,4 @@
+Lakebed capsule running at http://localhost:3000
+Capsule: /workspace/surface/lakebed
+Auth: protected browser sessions
+Inspect: http://localhost:3000/__lakebed/manifest (no token, bound to 0.0.0.0)

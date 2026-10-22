@@ -26,6 +26,8 @@ Stop rather than guess when input is invalid, required information is missing, i
 
 ## Not building yet
 
-External trackers and authentication, Lakebed integration, UI, dispatch, implementation agents, scheduling, and background workers are out of scope for the first version.
+Lesson 03 adds a local, read-only Lakebed projection of the same validated issue-event file. List, board, and event views must preserve the checker's classifications, stop reasons, and next allowed actions. A manually started read endpoint may serve these facts; it must not modify inputs or execute proposals.
+
+External trackers and authentication, UI writes, dispatch, implementation agents, scheduling, and background workers remain out of scope.
 
 First prove one local check with readable receipts.

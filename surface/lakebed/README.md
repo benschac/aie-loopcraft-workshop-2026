@@ -1,45 +1,48 @@
-# Lakebed Issue Loop Surface
+# Read-only Lakebed issue views
 
-This capsule is a spike for using Lakebed as the first real provider for the local issue-progress loop's issue store and operator control surface.
+Lakebed shows the facts from `data/issue-events.jsonl`. The CLI and the local read endpoint use the same Effect-validated checker. The capsule stores nothing, changes nothing, and never executes proposals.
 
-Run locally:
+## Run locally
+
+From the project root, start the read endpoint in one terminal:
 
 ```sh
-npx lakebed dev
+pnpm run issues:serve
 ```
 
-## What this spike proves
+In another terminal:
 
-- Lakebed can store canonical issue events in its database.
-- Lakebed can project current issue state for a human-facing operator surface.
-- The first operator action is approval: approving an `approval_required` issue appends an `issue.updated` event with `approval: "pre-approved"` and `status: "ready"`.
-- The Effect/XState loop core is not imported into the capsule.
-- Capsule shared code is plain TypeScript and does not import Effect, XState, Node built-ins, or repo core modules.
+```sh
+npx lakebed dev surface/lakebed --host 127.0.0.1 --port 3000
+```
 
-## Intentional boundary
+Open <http://127.0.0.1:3000>. Choose **board**, **list**, or **events**. Each issue shows its status, reason, stop reason, proposed action, next allowed action, and the events behind it. Ready means proposal-ready, not permission to implement.
 
-Lakebed is the target provider for this spike, not the domain model.
+Use **Refresh from file** after the input changes. This is a snapshot, not a monitor. On refresh, old cards are cleared; invalid input or an unavailable endpoint shows an error, never stale or partial cards.
 
-The intended architecture is:
+## Read path
 
 ```txt
-Lakebed capsule
-  owns UI, database schema, mutations, queries, and realtime-ish operator state
-
-LakebedIssueStore adapter
-  translates Lakebed issue events into the core IssueStore port
-
-Effect/XState core
-  validates provider data, projects trusted state, runs the loop lifecycle, and writes receipts
+data/issue-events.jsonl
+  → src/issue-events.ts (Effect validation and checker decisions)
+  → src/issue-projection.ts (latest finding per issue, history, counts, hash)
+  → GET http://127.0.0.1:8788/api/issues
+  → Lakebed browser views
 ```
 
-## Adapter seam
+The direct browser read is deliberate: Lakebed capsule code cannot import Node filesystem APIs or the Effect core. A query over a second database would introduce another source of truth. This local-only view reads the small Node endpoint instead. Its CORS allowlist permits only localhost/127.0.0.1 on port 3000; the endpoint binds to loopback and accepts only GET. There are no capsule mutations, approval buttons, demo seeds, external auth, polling, or write endpoints.
 
-The capsule exposes issue events through local HTTP endpoints:
+Events are ordered by file position. Multiple events for one issue retain their history; only the latest checker finding becomes its card. Counts refer to issues, while the CLI also reports every event.
 
-- `GET /api/issue-events` returns core-shaped issue events from Lakebed storage.
-- `POST /api/issue-events` appends one issue event or an array of issue events into Lakebed storage.
+## Compare and save evidence
 
-The repo core uses the read endpoint through `LakebedIssueStore`. The write endpoint lets local tooling publish approved issue batches into Lakebed without scraping `db dump` output or importing core modules into the capsule.
+```sh
+pnpm run issues:check --receipt
+pnpm run check
+pnpm run ultracite:check
+npx lakebed build surface/lakebed --out /tmp/loopcraft-lakebed.json --json
+```
 
-Do not import `src/loop-check.ts`, Effect schemas, or Node file code into the capsule. Providers speak their natural API; adapters translate; the core validates before trusting provider data.
+Compare the CLI classifications with each card's event ID, status, stop reason, and next allowed action. Record the file hash, route opened, counts, and any mismatch in a dedicated `receipts/` file. If they disagree, fix the read/view path—not the issue file.
+
+For a different input, pass the same file to both `issues:check` and `issues:serve`. Keep the UI and endpoint on this machine; remote hosting and forwarded-container access need a separate transport decision.

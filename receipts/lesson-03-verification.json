@@ -1,0 +1,37 @@
+{
+  "verifiedAt": "2026-10-22T14:29:51.050Z",
+  "fileRead": "/workspace/data/issue-events.jsonl",
+  "sourceSha256": "aaeb9fb0bf360881988f68902a2a8866bc7410f5af5055c294d05ff539c1dc34",
+  "checkCommand": "pnpm --config.verify-deps-before-run=false run issues:check --receipt",
+  "checkReceipt": "receipts/check-401e6cf6-508a-4465-bc89-c738fc4ff13d.json",
+  "commandNote": "Disabled pnpm's dependency auto-install preflight for this invocation; the check itself and all quality gates ran unchanged against installed dependencies.",
+  "lakebedRoute": "http://127.0.0.1:3000/",
+  "routeHttpStatus": 200,
+  "endpoint": "http://127.0.0.1:8788/api/issues",
+  "counts": {
+    "approval-required": 1,
+    "input-required": 1,
+    "ready": 1
+  },
+  "eventCount": 3,
+  "endpointComparison": "All card fields exactly match CLI classifications after removing card histories. Event history exactly matches CLI events. Endpoint SHA-256 matches the current input bytes.",
+  "renderedViewsVerified": true,
+  "browser": "Playwright 1.64.1, headless Chromium 156; missing shared libraries extracted into ignored .lakebed/browser-libs and loaded with LD_LIBRARY_PATH. No system packages installed or project dependencies added.",
+  "viewComparisons": {
+    "board": "Three cards, one in each expected status lane; each matches CLI title, status, stop reason, next allowed action and event ID. Event traces expanded.",
+    "list": "Three cards; each matches CLI title, status, stop reason, next allowed action and event ID. Event traces expanded.",
+    "events": "Three event articles; each matches CLI event ID, current status, stop reason and next allowed action. Full endpoint event objects also match CLI events."
+  },
+  "browserPageErrors": [],
+  "mismatch": "none",
+  "checks": {
+    "product": "passed: core and Lakebed typechecks, lint, format, 3 test files and 11 tests",
+    "ultracite": "passed",
+    "lakebedBuild": "passed: npx lakebed build surface/lakebed --out /tmp/loopcraft-lakebed.json --json"
+  },
+  "issueInputUnchanged": true,
+  "implementationChangesThisPass": "None needed; verified the existing read-only endpoint, projection module and Lakebed views.",
+  "boundaries": "No writes to issue inputs, proposals executed, schedulers, external tracker integrations, or background workers added. Only the local endpoint and Lakebed dev server were started for viewing.",
+  "stopReason": "Lesson 03 comparison complete; all rendered views agree with the local checker.",
+  "nextAllowedAction": "Review the evidence before choosing Lesson 04. Ready still means proposal-ready, not permission to implement."
+}

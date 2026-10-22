@@ -1,0 +1,30 @@
+{
+  "fileRead": "/workspace/data/issue-events.jsonl",
+  "sourceSha256": "2392d82c996f5ea15a8dbd66e647c4d64dac2e1382115b1a634488ee9de3025b",
+  "checkCommand": "pnpm run issues:check --receipt",
+  "checkReceipt": "receipts/check-9d01c292-d709-4d39-8192-6619de11f950.json",
+  "lakebedRoute": "http://127.0.0.1:3000/",
+  "routeHttpStatus": 200,
+  "endpoint": "http://127.0.0.1:8788/api/issues",
+  "endpointCounts": {
+    "approval-required": 1,
+    "input-required": 1,
+    "ready": 1
+  },
+  "eventCount": 3,
+  "comparison": "Each endpoint card exactly matches its CLI classification, including title, event ID, stop reason, and next allowed action. Event history and file SHA-256 match.",
+  "endpointMismatch": "none",
+  "renderedViewsVerified": false,
+  "browserBlocker": "Chromium cannot launch: missing libnspr4.so. Board/list/events still require a browser comparison.",
+  "checks": {
+    "product": "Passed initially, 10 tests. Final rerun blocked: @typescript/native-preview-linux-arm64 missing from node_modules.",
+    "ultracite": "passed",
+    "lakebedBuild": "passed",
+    "webCheck": "blocked: bun not installed; web dependencies also absent",
+    "webBuild": "blocked: bun not installed; web dependencies also absent"
+  },
+  "issueInputUnchangedDuringInitialComparison": true,
+  "laterInputObservation": "External edits changed the first event ID, briefly to numeric 4. The checker rejected the numeric ID. A subsequent read matched this receipt's original SHA-256 again. No agent edits to the input file.",
+  "stopReason": "Endpoint comparison complete; rendered-view verification pending. No proposals executed.",
+  "nextAllowedAction": "Open the Lakebed route in a browser, compare board/list/events against the check receipt, and record any mismatch before Lesson 04."
+}

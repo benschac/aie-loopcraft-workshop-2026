@@ -8,12 +8,13 @@ Build the local issue-progress loop in this folder. Do not manage anything outsi
 
 Lessons are the path. Issue events are the project data we are building toward.
 
-Start with Lesson 01 (run `/loop-lesson-01` in Pi, or read `web/static/lessons/01-tour-vision-repo/prompt.txt`; full lesson at <https://aie-loopcraft-workshop-2026.wzrrd.sh/lessons/01-tour-vision-repo/>): create `VISION.md` and the first repo boundaries only. Lesson 02 creates the local issue-event queue and first checks. Do not jump ahead to Lakebed code, dispatch, schedulers, GitHub, Linear, or background workers.
+Start with Lesson 01 (run `/loop-lesson-01` in Pi, or read `web/static/lessons/01-tour-vision-repo/prompt.txt`; full lesson at <https://aie-loopcraft-workshop-2026.wzrrd.sh/lessons/01-tour-vision-repo/>): create `VISION.md` and the first repo boundaries only. Lesson 02 creates the local issue-event queue and first checks. Lesson 03 adds read-only Lakebed views of the same validated event file. Do not add UI writes, dispatch, schedulers, GitHub, Linear, or background workers.
 
 ## Local checks
 
 - `pnpm run issues:check` validates the local queue; add `--receipt` to save findings under `receipts/`.
-- `pnpm run check` runs product typecheck, lint, formatting checks, and tests. Run `pnpm run ultracite:check` for the preset checks too.
+- `pnpm run issues:serve` serves read-only cards on loopback port 8788. Run `npx lakebed dev surface/lakebed --host 127.0.0.1 --port 3000` and open port 3000. See `surface/lakebed/README.md`.
+- `pnpm run check` covers core and Lakebed capsule typecheck, lint, formatting checks, and tests. Run `pnpm run ultracite:check` for the preset checks too.
 - See `docs/local-check.md` for the input contract. Ready means proposal-ready, not permission to implement; the checker never executes proposals.
 
 ## Standing habits

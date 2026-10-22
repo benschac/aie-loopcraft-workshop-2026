@@ -71,6 +71,7 @@ const classify = (event: IssueEvent) => {
     proposedAction: event.proposedAction,
     reason: event.reason,
     refusedAction: `Execute the proposal: ${event.proposedAction}`,
+    title: event.title,
   };
   switch (event.gate) {
     case "ready": {
@@ -111,6 +112,7 @@ export const checkIssues = (text: string, fileRead: string) => {
     classifications: events.map(classify),
     complete: true,
     eventCount: events.length,
+    events,
     fileRead,
     mode: "proposal-only",
     nextAllowedAction:

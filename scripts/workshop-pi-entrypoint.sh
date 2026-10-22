@@ -2,12 +2,19 @@
 set -euo pipefail
 
 pi_prefix="${HOME}/.pi/npm"
+if [[ -n "${PI_VERSION:-}" ]]; then
+  if [[ ! "${PI_VERSION}" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$ ]]; then
+    printf 'PI_VERSION must be an exact version, got %s.\n' "${PI_VERSION}" >&2
+    exit 1
+  fi
+  pi_prefix="${pi_prefix}/versions/${PI_VERSION}"
+fi
 pi_bin="${pi_prefix}/bin/pi"
 export PATH="${pi_prefix}/bin:${PATH}"
 
 if [[ -n "${PI_VERSION:-}" ]]; then
   mkdir -p "${pi_prefix}"
-  # Multiple workshop containers can share this installation.
+  # Containers requesting the same version share an installation and lock.
   exec 9>"${pi_prefix}/.install.lock"
   flock -x 9
 

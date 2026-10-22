@@ -83,9 +83,11 @@ This does not pre-create Pi or daemon panes. Herdr gives you the workspace; you 
 
 The workshop launch scripts match your local `pi --version`. Set `PI_VERSION`
 in your shell to override it, for example `PI_VERSION=1.4.0 pnpm run workshop`. The matching Linux
-package is saved in the existing Pi volume and reused across runs. Installing or
-changing versions requires npm access. Without a local Pi or override, the
-container uses its saved installation or the Pi bundled in the image.
+package is saved by version in the existing Pi volume and reused across runs,
+so containers requesting different versions keep separate installations.
+Installing a version for the first time requires npm access. Without a local Pi
+or override, the container uses a legacy unversioned saved installation if present,
+otherwise the Pi bundled in the image.
 
 ## No-pnpm Docker commands
 

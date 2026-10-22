@@ -24,7 +24,25 @@ export interface IssueCard {
   events: readonly IssueEvent[];
 }
 
+export interface CheckerStatus {
+  state: "unchecked" | "done" | "stale";
+  checkedAt: string | null;
+  lastCommand: string | null;
+  lastReceipt: string | null;
+  waitingReason: string;
+  fileRead: string;
+  sourceSha256: string;
+  checkedSourceSha256: string | null;
+  issues: readonly {
+    issueId: string;
+    eventId: string;
+    classification: Gate;
+    stopReason: string;
+  }[];
+}
+
 export interface IssueProjection {
+  checker?: CheckerStatus;
   cards: readonly IssueCard[];
   complete: boolean;
   counts: Record<Gate, number>;

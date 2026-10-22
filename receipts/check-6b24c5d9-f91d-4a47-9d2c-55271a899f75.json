@@ -1,0 +1,78 @@
+{
+  "classifications": [
+    {
+      "classification": "ready",
+      "eventId": "event-001",
+      "issueId": "LOCAL-001",
+      "proposedAction": "After human approval, add the local check command and expected output to the project docs.",
+      "reason": "The command and expected report fields are known; document them without adding integrations.",
+      "refusedAction": "Execute the proposal: After human approval, add the local check command and expected output to the project docs.",
+      "title": "Document how to run the local check",
+      "nextAllowedAction": "Present this proposal to a human for approval; do not execute it.",
+      "stopReason": "Proposal only: VISION.md requires approval before any implementation."
+    },
+    {
+      "classification": "approval-required",
+      "eventId": "event-002",
+      "issueId": "LOCAL-002",
+      "proposedAction": "Ask a human to approve or reject moving the default queue from data/issue-events.jsonl to issues.jsonl.",
+      "reason": "A human must decide whether changing the input path is acceptable before any code or issue data changes.",
+      "refusedAction": "Execute the proposal: Ask a human to approve or reject moving the default queue from data/issue-events.jsonl to issues.jsonl.",
+      "title": "Change the default issue queue location",
+      "nextAllowedAction": "Present the decision request to a human; wait for approval.",
+      "stopReason": "Human decision required: A human must decide whether changing the input path is acceptable before any code or issue data changes."
+    },
+    {
+      "classification": "input-required",
+      "eventId": "event-003",
+      "issueId": "LOCAL-003",
+      "proposedAction": "Ask a human for the staleness threshold and timestamp source before proposing an implementation.",
+      "reason": "No age threshold or reference timestamp has been specified. Ask which threshold and timestamp to use.",
+      "refusedAction": "Execute the proposal: Ask a human for the staleness threshold and timestamp source before proposing an implementation.",
+      "title": "Define when an issue is stale",
+      "nextAllowedAction": "Present the clarification request to a human; do not guess.",
+      "stopReason": "Missing information: No age threshold or reference timestamp has been specified. Ask which threshold and timestamp to use."
+    }
+  ],
+  "complete": true,
+  "eventCount": 3,
+  "events": [
+    {
+      "eventId": "event-001",
+      "gate": "ready",
+      "issueId": "LOCAL-001",
+      "proposedAction": "After human approval, add the local check command and expected output to the project docs.",
+      "reason": "The command and expected report fields are known; document them without adding integrations.",
+      "title": "Document how to run the local check",
+      "type": "issue-recorded"
+    },
+    {
+      "eventId": "event-002",
+      "gate": "approval-required",
+      "issueId": "LOCAL-002",
+      "proposedAction": "Ask a human to approve or reject moving the default queue from data/issue-events.jsonl to issues.jsonl.",
+      "reason": "A human must decide whether changing the input path is acceptable before any code or issue data changes.",
+      "title": "Change the default issue queue location",
+      "type": "issue-recorded"
+    },
+    {
+      "eventId": "event-003",
+      "gate": "input-required",
+      "issueId": "LOCAL-003",
+      "proposedAction": "Ask a human for the staleness threshold and timestamp source before proposing an implementation.",
+      "reason": "No age threshold or reference timestamp has been specified. Ask which threshold and timestamp to use.",
+      "title": "Define when an issue is stale",
+      "type": "issue-recorded"
+    }
+  ],
+  "fileRead": "/workspace/data/issue-events.jsonl",
+  "mode": "proposal-only",
+  "nextAllowedAction": "Review findings with a human. Only dedicated receipts and run logs may be written.",
+  "refusedAction": "Change issue inputs or project code, run implementation agents, or contact external services.",
+  "stopReason": "Check complete; no proposed actions were executed.",
+  "checkedAt": "2026-10-22T21:39:05.896Z",
+  "lastCommand": "pnpm run issues:check \"/workspace/data/issue-events.jsonl\" --receipt",
+  "receiptFile": "/workspace/receipts/check-6b24c5d9-f91d-4a47-9d2c-55271a899f75.json",
+  "sourceSha256": "aaeb9fb0bf360881988f68902a2a8866bc7410f5af5055c294d05ff539c1dc34",
+  "statusVersion": 1
+}

@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "issues:check": "node src/loop-check.ts",
+    "issues:check-now": "node src/loop-check.ts --receipt",
+    "issues:status": "node src/status.ts",
     "issues:serve": "node src/serve-projection.ts",
     "test": "vitest run",
     "typecheck": "pnpm run typecheck:core && pnpm run typecheck:lakebed",

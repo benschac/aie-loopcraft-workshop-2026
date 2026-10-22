@@ -1,4 +1,4 @@
-import { randomUUID } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
@@ -16,11 +16,23 @@ const main = async () => {
   }
   const fileRead = path.resolve(files[0] ?? "data/issue-events.jsonl");
   console.log(`Reading: ${fileRead}`);
-  const report = checkIssues(await readFile(fileRead, "utf-8"), fileRead);
+  const text = await readFile(fileRead, "utf-8");
+  const report = checkIssues(text, fileRead);
   const receiptFile = args.includes("--receipt")
     ? path.resolve("receipts", `check-${randomUUID()}.json`)
     : null;
-  const output = `${JSON.stringify({ ...report, receiptFile }, null, 2)}\n`;
+  const output = `${JSON.stringify(
+    {
+      ...report,
+      checkedAt: new Date().toISOString(),
+      lastCommand: `pnpm run issues:check ${JSON.stringify(fileRead)}${receiptFile ? " --receipt" : ""}`,
+      receiptFile,
+      sourceSha256: createHash("sha256").update(text).digest("hex"),
+      statusVersion: 1,
+    },
+    null,
+    2
+  )}\n`;
   if (receiptFile !== null) {
     await mkdir(path.dirname(receiptFile), { recursive: true });
     await writeFile(receiptFile, output, { flag: "wx" });

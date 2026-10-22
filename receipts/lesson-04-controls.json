@@ -1,0 +1,31 @@
+{
+  "agreement": "Pi bash output = Herdr status/check pane = Lakebed API checker = latest successful receipt",
+  "checkedAt": "2026-10-22T21:39:05.896Z",
+  "lastCommand": "pnpm run issues:check \"/workspace/data/issue-events.jsonl\" --receipt",
+  "lastReceipt": "/workspace/receipts/check-6b24c5d9-f91d-4a47-9d2c-55271a899f75.json",
+  "sourceSha256": "aaeb9fb0bf360881988f68902a2a8866bc7410f5af5055c294d05ff539c1dc34",
+  "issues": [
+    { "issueId": "LOCAL-001", "eventId": "event-001", "classification": "ready" },
+    { "issueId": "LOCAL-002", "eventId": "event-002", "classification": "approval-required" },
+    { "issueId": "LOCAL-003", "eventId": "event-003", "classification": "input-required" }
+  ],
+  "piPane": "w1:p1",
+  "statusPane": "w1:p3",
+  "herdrTab": "w1:t1",
+  "herdrLayout": "Pi left, Status / check right, no polling or scheduled checks",
+  "lakebedUrl": "http://127.0.0.1:3000/",
+  "lakebedApi": "http://127.0.0.1:8788/api/issues",
+  "verification": [
+    "Executed check-now and status through the current Pi session's bash tool.",
+    "Read the Herdr status pane and asserted it contains the exact same status JSON.",
+    "Asserted the Lakebed API checker object equals that status JSON.",
+    "Compared receipt time, command, filename, source hash, and latest issue/event/classification facts against status and Lakebed cards.",
+    "Lakebed HTTP 200; core/Lakebed typechecks passed. Herdr layout confirms Pi and Status / check remain side by side without zoom."
+  ],
+  "browserRendering": "Not exercised; refresh the visible Lakebed view manually.",
+  "checks": {
+    "product": "14 tests passed; typecheck, lint, formatting, Ultracite, and all-files pre-commit hook passed",
+    "workshopSite": "web:check and web:build blocked: bun is not installed"
+  },
+  "boundaries": "No claim commands, dispatch, proposal execution, or background scheduling. Status describes the latest successful saved check, not a live daemon."
+}

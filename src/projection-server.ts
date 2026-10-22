@@ -1,10 +1,14 @@
 import { readFile } from "node:fs/promises";
 import { createServer } from "node:http";
 
+import { readCheckerStatus } from "./checker-status.ts";
 import { projectIssues } from "./issue-projection.ts";
 
 /** No cache and no writes: a bad file never produces partial or stale cards. */
-export const createProjectionServer = (fileRead: string) =>
+export const createProjectionServer = (
+  fileRead: string,
+  receiptDirectory?: string
+) =>
   createServer(async (request, response) => {
     const { origin } = request.headers;
     if (origin && !/^http:\/\/(?:localhost|127\.0\.0\.1):3000$/u.test(origin)) {
@@ -33,7 +37,12 @@ export const createProjectionServer = (fileRead: string) =>
         await readFile(fileRead, "utf-8"),
         fileRead
       );
-      response.end(JSON.stringify(projection));
+      const checker = await readCheckerStatus(
+        fileRead,
+        projection.sourceSha256,
+        receiptDirectory
+      );
+      response.end(JSON.stringify({ ...projection, checker }));
     } catch (error) {
       response.writeHead(422).end(
         JSON.stringify({

@@ -6,6 +6,7 @@ import path from "node:path";
 
 import { test } from "vitest";
 
+import { readCheckerStatus } from "../src/checker-status.ts";
 import { checkIssues } from "../src/issue-events.ts";
 import { projectIssues } from "../src/issue-projection.ts";
 import { createProjectionServer } from "../src/projection-server.ts";
@@ -72,7 +73,10 @@ test("HTTP read uses fresh file content, refuses writes and origins, and fails c
       response.headers.get("access-control-allow-origin"),
       "http://localhost:3000"
     );
-    assert.deepEqual(await response.json(), projectIssues(text, input));
+    const projection = projectIssues(text, input);
+    const checker = await readCheckerStatus(input, projection.sourceSha256);
+    assert.deepEqual(await response.json(), { ...projection, checker });
+    assert.equal(checker.state, "unchecked");
     const write = await fetch(url, { body: "{}", method: "POST" });
     assert.equal(write.status, 405);
     const foreign = await fetch(url, {

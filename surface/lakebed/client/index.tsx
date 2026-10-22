@@ -133,6 +133,16 @@ export const App = () => {
               <br />
               SHA-256: {projection.sourceSha256}
             </p>
+            <section aria-label="Latest saved check" className="my-3">
+              <h2 className="text-lg font-bold">Latest saved check</h2>
+              <pre className="overflow-auto text-sm whitespace-pre-wrap">
+                {JSON.stringify(projection.checker, null, 2)}
+              </pre>
+              <p>
+                Refresh after check-now. This is a saved check, not a running
+                process.
+              </p>
+            </section>
             <p className="my-3">
               {projection.cards.length} issues · {projection.eventCount} events
               ·{" "}

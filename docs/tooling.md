@@ -21,6 +21,56 @@ the workshop web scripts intact alongside them.
 - `pnpm test` — Vitest running TypeScript tests directly.
 - `pnpm run check` — typecheck, lint, format check, and tests in one gate.
 
+## Check coverage and Git hooks
+
+The product gate now covers `src/`, `tests/`, and the Lakebed capsule's
+`client/`, `server/`, and `shared/` code. `typecheck:core` checks the Node core;
+`typecheck:lakebed` checks the capsule. Both run through `typecheck`. The workshop
+Svelte site still has its separate `web:check` and `web:build` commands; it is not
+part of the product hook gate.
+
+`surface/lakebed/tsconfig.json` tells TypeScript and Zed to use Preact's JSX
+runtime, DOM types, and bundler-style resolution. Root development dependencies
+provide the real Lakebed and Preact types; no packages are installed inside the
+capsule. `jsx: "react-jsx"` names TypeScript's automatic JSX transform—not a React
+dependency. `jsxImportSource: "preact"` selects the actual runtime. A Lakebed build
+is a separate bundling check, not a substitute for this typecheck.
+
+Install dependencies and Git hooks in each checkout:
+
+```sh
+pnpm install --frozen-lockfile
+pnpm run hooks:install
+```
+
+`lefthook.yml` runs these ordinary Git hooks, regardless of whether edits came
+from Pi, Zed, or another tool:
+
+- **pre-commit:** `pnpm run hooks:pre-commit` runs typecheck, lint, and format checks.
+- **pre-push:** `pnpm run hooks:pre-push` runs the full product check, including tests.
+
+The commands check the whole product scope, not just staged paths. They do not
+format, stage, commit, or push files. Hooks are local safeguards and can be
+bypassed; they are not a substitute for CI or running checks during an edit.
+
+Verify without staging or committing anything:
+
+```sh
+pnpm exec lefthook run pre-commit --all-files
+pnpm exec lefthook run pre-push --all-files
+```
+
+Use `--all-files` for manual verification: an empty index may otherwise cause
+Lefthook to skip pre-commit. A skipped gate is not a passing check.
+`tests/lakebed-typecheck.test.ts` also proves that the real capsule configuration
+accepts valid Preact JSX and rejects an incorrectly typed JSX prop.
+
+Do not share an installed `node_modules` between macOS and a Linux container.
+Native tools need different platform binaries. Keep installs separate (for
+example, a container-only `node_modules` volume), and reinstall for the active
+platform if pnpm reports an unexpected store. Restart Zed's TypeScript language
+server after installing dependencies or changing the capsule config.
+
 Later passes add the issue-event and runtime surface (typed issue writes, the
 bridge daemon, the supervisor-runtime flag). Document those when you build them;
 do not pre-wire them here.

@@ -1,0 +1,58 @@
+{
+  "verifiedAt": "2026-10-21T16:11:01.254Z",
+  "scope": "Core TypeScript plus Lakebed client TSX, server, and shared TypeScript. Workshop Svelte site remains a separate check.",
+  "probe": "Real temporary TSX file with invalid numeric title prop; deleted before green checks.",
+  "manualHookMode": "--all-files ensures hooks execute without staging or pushing anything. A plain pre-commit invocation skipped because the index is empty; that was not counted as a pass.",
+  "stagedOrCommitted": false,
+  "results": [
+    {
+      "command": "pnpm run typecheck",
+      "expected": "reject",
+      "exitCode": 1,
+      "stdout": "Already up to date\nDone in 345ms using pnpm v11.9.0\nsurface/lakebed/client/hook-probe-73b76bff-1c33-4d29-86fa-ae027cebfed8.tsx(1,37): error TS2322: Type 'number' is not assignable to type 'Signalish<string | undefined>'.\n[ELIFECYCLE] Command failed with exit code 1.\n[ELIFECYCLE] Command failed with exit code 1.\n",
+      "stderr": "$ pnpm run typecheck:core && pnpm run typecheck:lakebed\n$ tsgo --noEmit\n$ tsgo --noEmit -p surface/lakebed/tsconfig.json\n"
+    },
+    {
+      "command": "sh .git/hooks/pre-commit --all-files",
+      "expected": "reject",
+      "exitCode": 1,
+      "stdout": "\u001b[38;2;56;56;56m╭─────────────────────────────────────────╮\u001b[m\n\u001b[38;2;56;56;56m│\u001b[m 🥊 lefthook  v2.2.2   hook:  \u001b[1mpre-commit\u001b[m \u001b[38;2;56;56;56m│\u001b[m\n\u001b[38;2;56;56;56m╰─────────────────────────────────────────╯\u001b[m\n┃  quality ❯ \nAlready up to date\nDone in 358ms using pnpm v11.9.0\n$ pnpm run typecheck && pnpm run lint && pnpm run format:check\n$ pnpm run typecheck:core && pnpm run typecheck:lakebed\n$ tsgo --noEmit\n$ tsgo --noEmit -p surface/lakebed/tsconfig.json\nsurface/lakebed/client/hook-probe-73b76bff-1c33-4d29-86fa-ae027cebfed8.tsx(1,37): error TS2322: Type 'number' is not assignable to type 'Signalish<string | undefined>'.\n[ELIFECYCLE] Command failed with exit code 1.\n[ELIFECYCLE] Command failed with exit code 1.\n[ELIFECYCLE] Command failed with exit code 1.\n\nexit status 1\n\u001b[38;2;56;56;56m  ────────────────────────────────────\u001b[m\nsummary: (done in 2.23 seconds)\n🥊 quality (2.23 seconds)\n",
+      "stderr": ""
+    },
+    {
+      "command": "sh .git/hooks/pre-push --all-files",
+      "expected": "reject",
+      "exitCode": 1,
+      "stdout": "\u001b[38;2;56;56;56m╭───────────────────────────────────────╮\u001b[m\n\u001b[38;2;56;56;56m│\u001b[m 🥊 lefthook  v2.2.2   hook:  \u001b[1mpre-push\u001b[m \u001b[38;2;56;56;56m│\u001b[m\n\u001b[38;2;56;56;56m╰───────────────────────────────────────╯\u001b[m\n┃  full-check ❯ \nAlready up to date\nDone in 363ms using pnpm v11.9.0\n$ pnpm run check\n$ pnpm run typecheck && pnpm run lint && pnpm run format:check && pnpm test\n$ pnpm run typecheck:core && pnpm run typecheck:lakebed\n$ tsgo --noEmit\n$ tsgo --noEmit -p surface/lakebed/tsconfig.json\nsurface/lakebed/client/hook-probe-73b76bff-1c33-4d29-86fa-ae027cebfed8.tsx(1,37): error TS2322: Type 'number' is not assignable to type 'Signalish<string | undefined>'.\n[ELIFECYCLE] Command failed with exit code 1.\n[ELIFECYCLE] Command failed with exit code 1.\n[ELIFECYCLE] Command failed with exit code 1.\n[ELIFECYCLE] Command failed with exit code 1.\n\nexit status 1\n\u001b[38;2;56;56;56m  ────────────────────────────────────\u001b[m\nsummary: (done in 2.58 seconds)\n🥊 full-check (2.58 seconds)\n",
+      "stderr": ""
+    },
+    {
+      "command": "pnpm exec lefthook run pre-commit --all-files",
+      "expected": "pass",
+      "exitCode": 0,
+      "stdout": "Already up to date\nDone in 349ms using pnpm v11.9.0\n\u001b[38;2;56;56;56m╭─────────────────────────────────────────╮\u001b[m\n\u001b[38;2;56;56;56m│\u001b[m 🥊 lefthook  v2.2.2   hook:  \u001b[1mpre-commit\u001b[m \u001b[38;2;56;56;56m│\u001b[m\n\u001b[38;2;56;56;56m╰─────────────────────────────────────────╯\u001b[m\n┃  quality ❯ \n$ pnpm run typecheck && pnpm run lint && pnpm run format:check\n$ pnpm run typecheck:core && pnpm run typecheck:lakebed\n$ tsgo --noEmit\n$ tsgo --noEmit -p surface/lakebed/tsconfig.json\n$ oxlint --deny-warnings src tests surface/lakebed/client surface/lakebed/server surface/lakebed/shared oxlint.config.ts oxfmt.config.ts vitest.config.ts\n$ oxfmt --check src tests surface/lakebed/client surface/lakebed/server surface/lakebed/shared surface/lakebed/tsconfig.json package.json tsconfig.json oxlint.config.ts oxfmt.config.ts vitest.config.ts lefthook.yml pnpm-workspace.yaml\nChecking formatting...\n\nAll matched files use the correct format.\nFinished in 119ms on 19 files using 10 threads.\n\n\u001b[38;2;56;56;56m  ────────────────────────────────────\u001b[m\nsummary: (done in 2.88 seconds)\n✔️ quality (2.88 seconds)\n",
+      "stderr": ""
+    },
+    {
+      "command": "sh .git/hooks/pre-commit --all-files",
+      "expected": "pass",
+      "exitCode": 0,
+      "stdout": "\u001b[38;2;56;56;56m╭─────────────────────────────────────────╮\u001b[m\n\u001b[38;2;56;56;56m│\u001b[m 🥊 lefthook  v2.2.2   hook:  \u001b[1mpre-commit\u001b[m \u001b[38;2;56;56;56m│\u001b[m\n\u001b[38;2;56;56;56m╰─────────────────────────────────────────╯\u001b[m\n┃  quality ❯ \nAlready up to date\nDone in 353ms using pnpm v11.9.0\n$ pnpm run typecheck && pnpm run lint && pnpm run format:check\n$ pnpm run typecheck:core && pnpm run typecheck:lakebed\n$ tsgo --noEmit\n$ tsgo --noEmit -p surface/lakebed/tsconfig.json\n$ oxlint --deny-warnings src tests surface/lakebed/client surface/lakebed/server surface/lakebed/shared oxlint.config.ts oxfmt.config.ts vitest.config.ts\n$ oxfmt --check src tests surface/lakebed/client surface/lakebed/server surface/lakebed/shared surface/lakebed/tsconfig.json package.json tsconfig.json oxlint.config.ts oxfmt.config.ts vitest.config.ts lefthook.yml pnpm-workspace.yaml\nChecking formatting...\n\nAll matched files use the correct format.\nFinished in 122ms on 19 files using 10 threads.\n\n\u001b[38;2;56;56;56m  ────────────────────────────────────\u001b[m\nsummary: (done in 3.18 seconds)\n✔️ quality (3.18 seconds)\n",
+      "stderr": ""
+    },
+    {
+      "command": "sh .git/hooks/pre-push --all-files",
+      "expected": "pass",
+      "exitCode": 0,
+      "stdout": "\u001b[38;2;56;56;56m╭───────────────────────────────────────╮\u001b[m\n\u001b[38;2;56;56;56m│\u001b[m 🥊 lefthook  v2.2.2   hook:  \u001b[1mpre-push\u001b[m \u001b[38;2;56;56;56m│\u001b[m\n\u001b[38;2;56;56;56m╰───────────────────────────────────────╯\u001b[m\n┃  full-check ❯ \nAlready up to date\nDone in 373ms using pnpm v11.9.0\n$ pnpm run check\n$ pnpm run typecheck && pnpm run lint && pnpm run format:check && pnpm test\n$ pnpm run typecheck:core && pnpm run typecheck:lakebed\n$ tsgo --noEmit\n$ tsgo --noEmit -p surface/lakebed/tsconfig.json\n$ oxlint --deny-warnings src tests surface/lakebed/client surface/lakebed/server surface/lakebed/shared oxlint.config.ts oxfmt.config.ts vitest.config.ts\n$ oxfmt --check src tests surface/lakebed/client surface/lakebed/server surface/lakebed/shared surface/lakebed/tsconfig.json package.json tsconfig.json oxlint.config.ts oxfmt.config.ts vitest.config.ts lefthook.yml pnpm-workspace.yaml\nChecking formatting...\n\nAll matched files use the correct format.\nFinished in 126ms on 19 files using 10 threads.\n$ vitest run\n\n RUN  v5.0.5 /workspace\n\n\n Test Files  3 passed (3)\n      Tests  11 passed (11)\n   Start at  16:10:52\n   Duration  2.19s (tests 77%, import 22%, transform 1%)\n\n\n\u001b[38;2;56;56;56m  ────────────────────────────────────\u001b[m\nsummary: (done in 6.34 seconds)\n✔️ full-check (6.34 seconds)\n",
+      "stderr": ""
+    },
+    {
+      "command": "pnpm run hooks:pre-push",
+      "expected": "pass",
+      "exitCode": 0,
+      "stdout": "Already up to date\nDone in 335ms using pnpm v11.9.0\nChecking formatting...\n\nAll matched files use the correct format.\nFinished in 124ms on 19 files using 10 threads.\n\n RUN  v5.0.5 /workspace\n\n\n Test Files  3 passed (3)\n      Tests  11 passed (11)\n   Start at  16:10:59\n   Duration  2.19s (tests 78%, import 21%, transform 1%)\n\n",
+      "stderr": "$ pnpm run check\n$ pnpm run typecheck && pnpm run lint && pnpm run format:check && pnpm test\n$ pnpm run typecheck:core && pnpm run typecheck:lakebed\n$ tsgo --noEmit\n$ tsgo --noEmit -p surface/lakebed/tsconfig.json\n$ oxlint --deny-warnings src tests surface/lakebed/client surface/lakebed/server surface/lakebed/shared oxlint.config.ts oxfmt.config.ts vitest.config.ts\n$ oxfmt --check src tests surface/lakebed/client surface/lakebed/server surface/lakebed/shared surface/lakebed/tsconfig.json package.json tsconfig.json oxlint.config.ts oxfmt.config.ts vitest.config.ts lefthook.yml pnpm-workspace.yaml\n$ vitest run\n"
+    }
+  ]
+}

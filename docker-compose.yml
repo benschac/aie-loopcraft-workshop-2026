@@ -10,6 +10,10 @@ services:
     environment:
       SHELL: /usr/bin/zsh
       TERM: xterm-256color
+      PROJECTION_HOST: 0.0.0.0
+    ports:
+      - "127.0.0.1:3000:3000"
+      - "127.0.0.1:8788:8788"
     volumes:
       - .:/workspace
       - workshop-pi:/home/workshop/.pi

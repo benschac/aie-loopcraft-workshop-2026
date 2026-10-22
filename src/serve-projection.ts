@@ -13,8 +13,9 @@ if (args.length > 1 || args.some((arg) => arg.startsWith("-"))) {
     console.error(`PROJECTION FAILED: ${error.message}`);
     process.exitCode = 1;
   });
-  server.listen(8788, "127.0.0.1", () => {
-    console.log(`Read-only projection: http://127.0.0.1:8788/api/issues`);
+  const host = process.env.PROJECTION_HOST ?? "127.0.0.1";
+  server.listen(8788, host, () => {
+    console.log(`Read-only projection: http://${host}:8788/api/issues`);
     console.log(`Reading: ${fileRead}`);
   });
 }

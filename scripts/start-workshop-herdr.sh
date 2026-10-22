@@ -47,7 +47,7 @@ echo "Herdr session: ${session_name}"
 echo "Herdr workspace: ${workspace_label}"
 echo "Herdr tab: ${tab_label}"
 
-exec "${compose[@]}" run --rm \
+exec "${compose[@]}" run --rm --service-ports \
   -e HERDR_SESSION="${session_name}" \
   -e HERDR_WORKSPACE_LABEL="${workspace_label}" \
   -e HERDR_TAB_LABEL="${tab_label}" \

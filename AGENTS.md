@@ -15,6 +15,7 @@ Start with Lesson 01 (run `/loop-lesson-01` in Pi, or read `web/static/lessons/0
 - `pnpm run issues:check` validates the local queue; add `--receipt` to save findings under `receipts/`.
 - `pnpm run issues:serve` serves read-only cards on loopback port 8788. Run `npx lakebed dev surface/lakebed --host 127.0.0.1 --port 3000` and open port 3000. See `surface/lakebed/README.md`.
 - `pnpm run check` covers core and Lakebed capsule typecheck, lint, formatting checks, and tests. Run `pnpm run ultracite:check` for the preset checks too.
+- Run `pnpm run hooks:install` after dependency setup. Lefthook runs quality checks before commit and the full product gate before push. Verify manually with `pnpm exec lefthook run pre-commit --all-files`; skipped jobs are not passes.
 - See `docs/local-check.md` for the input contract. Ready means proposal-ready, not permission to implement; the checker never executes proposals.
 
 ## Standing habits

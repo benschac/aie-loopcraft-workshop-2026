@@ -1,0 +1,10 @@
+# Whole-project gates: no staged-file filters that can silently skip the capsule.
+pre-commit:
+  commands:
+    quality:
+      run: pnpm run hooks:pre-commit
+
+pre-push:
+  commands:
+    full-check:
+      run: pnpm run hooks:pre-push

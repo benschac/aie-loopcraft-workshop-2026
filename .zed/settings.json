@@ -1,4 +1,25 @@
 {
+  "file_scan_exclusions": [
+    "**/.git",
+    "**/.svn",
+    "**/.hg",
+    "**/.jj",
+    "**/.sl",
+    "**/.repo",
+    "**/CVS",
+    "**/.DS_Store",
+    "**/Thumbs.db",
+    "**/.classpath",
+    "**/.settings",
+    "**/node_modules",
+    ".agent_sources",
+    ".worktrees",
+    ".lakebed",
+    ".pnpm-store",
+    ".workshop",
+    "web/.svelte-kit",
+    "web/build"
+  ],
   "languages": {
     "TypeScript": {
       "formatter": {

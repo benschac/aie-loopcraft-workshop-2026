@@ -1,0 +1,19 @@
+{
+  "decisionId": "decision-711bae66-592b-45bd-a05d-6cd11440cdc5",
+  "issueId": "LOCAL-001",
+  "eventId": "event-001",
+  "rules": {
+    "file": "receipts/dry-run-711bae66-592b-45bd-a05d-6cd11440cdc5/rules.json",
+    "sha256": "deaa620500655695e127ddebebd6f46b644963f6ab8c1a88c5d2cccb4d1a9292"
+  },
+  "check": {
+    "file": "receipts/check-24764b46-1f6f-4769-832f-df0a2a32dde6.json",
+    "sha256": "9433dfe9ead368e06205aee3eda23127f5636f0e76d35f2abc5314d8c9417c55"
+  },
+  "sourceSha256": "aaeb9fb0bf360881988f68902a2a8866bc7410f5af5055c294d05ff539c1dc34",
+  "mode": "dry-run",
+  "answer": "yes",
+  "matchedRule": "simulate-selected",
+  "implementationAnswer": "no",
+  "reason": "Ready permits only a claimed memory simulation; implementation remains refused."
+}

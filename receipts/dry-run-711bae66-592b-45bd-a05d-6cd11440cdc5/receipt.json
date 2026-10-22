@@ -1,0 +1,73 @@
+{
+  "runId": "711bae66-592b-45bd-a05d-6cd11440cdc5",
+  "issueId": "LOCAL-001",
+  "sourceEventId": "event-001",
+  "decision": {
+    "claim": "allowed",
+    "reason": "LOCAL-001 is ready in the validated local check. Ownership is limited to one dry-run simulation with a durable claim before the attempt; implementation and product writes remain refused."
+  },
+  "receiptPath": "receipts/dry-run-711bae66-592b-45bd-a05d-6cd11440cdc5/receipt.json",
+  "mode": "dry-run",
+  "check": "receipts/check-24764b46-1f6f-4769-832f-df0a2a32dde6.json",
+  "rules": {
+    "file": "receipts/dry-run-711bae66-592b-45bd-a05d-6cd11440cdc5/rules.json",
+    "sha256": "deaa620500655695e127ddebebd6f46b644963f6ab8c1a88c5d2cccb4d1a9292"
+  },
+  "ruleDecision": {
+    "file": "receipts/dry-run-711bae66-592b-45bd-a05d-6cd11440cdc5/decision.json",
+    "sha256": "4a97d5ad44adb01b0f04e079398fb31c7402296ef5a7a3b1a6015a99d2c0ad9f"
+  },
+  "claimEvent": {
+    "file": "receipts/dry-run-711bae66-592b-45bd-a05d-6cd11440cdc5/claim-events.jsonl",
+    "sha256": "6f9dec89a4e890a71988de423575cf1d384555ffd414d120005d829b32c240db",
+    "eventId": "claim-711bae66-592b-45bd-a05d-6cd11440cdc5"
+  },
+  "dryRunResult": {
+    "file": "receipts/dry-run-711bae66-592b-45bd-a05d-6cd11440cdc5/dry-run-result.json",
+    "sha256": "44aeb0ce5eed867b3db745dc3e8baf099aa3531fb504959c1a7e6edbbd127df7"
+  },
+  "refusedActions": [
+    {
+      "id": "refuse-implementation",
+      "answer": "no",
+      "action": "implement-proposal",
+      "reason": "Ready is not human approval to implement."
+    },
+    {
+      "id": "refuse-product-writes",
+      "answer": "no",
+      "action": "write-product",
+      "reason": "Only dedicated receipt/run-log writes are allowed."
+    },
+    {
+      "id": "refuse-external",
+      "answer": "no",
+      "action": "external-service",
+      "reason": "No LLM API, GitHub API, or network services."
+    },
+    {
+      "id": "refuse-agents",
+      "answer": "no",
+      "action": "launch-implementation-agent",
+      "reason": "No implementation runtime has been authorized."
+    }
+  ],
+  "productChangedFiles": [],
+  "proof": {
+    "before": {
+      "file": "receipts/dry-run-711bae66-592b-45bd-a05d-6cd11440cdc5/product-before.json",
+      "sha256": "1ae1ca5aec30758adc41cee54fc1255a2b213f7a5e317a3aed62fb33898597a0"
+    },
+    "after": {
+      "file": "receipts/dry-run-711bae66-592b-45bd-a05d-6cd11440cdc5/product-after.json",
+      "sha256": "1ae1ca5aec30758adc41cee54fc1255a2b213f7a5e317a3aed62fb33898597a0"
+    },
+    "comparedFiles": 3574,
+    "equal": true,
+    "method": "SHA-256 content/symlink-target plus mode for all Git-tracked and nonignored untracked files outside receipts/. Includes pre-existing dirty files; detects additions/deletions. Ignored dependencies and Git internals are outside this proof.",
+    "scope": "Before policy/claim/simulation artifacts through completed dry-run."
+  },
+  "stopReason": "One claimed simulation completed; proposal not executed.",
+  "nextAction": "Review this receipt. Explicitly approve a bounded documentation change before any implementation; do not retry or contact services automatically.",
+  "nextAllowedAction": "Review the dry-run evidence and request explicit human approval for a bounded documentation change. No implementation or external calls are authorized."
+}

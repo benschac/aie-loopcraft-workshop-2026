@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "defaultDecision": "no",
+  "issueId": "LOCAL-001",
+  "eventId": "event-001",
+  "rules": [
+    {
+      "id": "simulate-selected",
+      "answer": "yes",
+      "action": "simulate-proposal",
+      "modes": [
+        "dry-run",
+        "memory"
+      ],
+      "requires": [
+        "ready",
+        "matching-source-hash",
+        "durable-claim-before-attempt"
+      ],
+      "reason": "Inspect a proposal without executing it."
+    },
+    {
+      "id": "refuse-implementation",
+      "answer": "no",
+      "action": "implement-proposal",
+      "reason": "Ready is not human approval to implement."
+    },
+    {
+      "id": "refuse-product-writes",
+      "answer": "no",
+      "action": "write-product",
+      "reason": "Only dedicated receipt/run-log writes are allowed."
+    },
+    {
+      "id": "refuse-external",
+      "answer": "no",
+      "action": "external-service",
+      "reason": "No LLM API, GitHub API, or network services."
+    },
+    {
+      "id": "refuse-agents",
+      "answer": "no",
+      "action": "launch-implementation-agent",
+      "reason": "No implementation runtime has been authorized."
+    }
+  ]
+}

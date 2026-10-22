@@ -1,0 +1,31 @@
+{
+  "runId": "711bae66-592b-45bd-a05d-6cd11440cdc5",
+  "issueId": "LOCAL-001",
+  "runtime": "deterministic-in-process-memory",
+  "mode": "dry-run",
+  "claim": {
+    "file": "receipts/dry-run-711bae66-592b-45bd-a05d-6cd11440cdc5/claim-events.jsonl",
+    "sha256": "6f9dec89a4e890a71988de423575cf1d384555ffd414d120005d829b32c240db",
+    "eventId": "claim-711bae66-592b-45bd-a05d-6cd11440cdc5"
+  },
+  "decision": {
+    "file": "receipts/dry-run-711bae66-592b-45bd-a05d-6cd11440cdc5/decision.json",
+    "sha256": "4a97d5ad44adb01b0f04e079398fb31c7402296ef5a7a3b1a6015a99d2c0ad9f"
+  },
+  "attemptedAt": "2026-10-22T22:52:47.298Z",
+  "attemptCount": 1,
+  "status": "simulated-not-executed",
+  "proposedAction": "After human approval, add the local check command and expected output to the project docs.",
+  "output": "Would document the local check command and expected report fields after explicit human approval.",
+  "productWrites": 0,
+  "networkCalls": 0,
+  "agentLaunches": 0,
+  "claimLifecycle": "consumed by this single simulation; not an active implementation claim",
+  "tests": {
+    "allowDryRun": true,
+    "refuseLiveMode": true,
+    "refuseOtherIssue": true,
+    "defaultDeny": true,
+    "refuseWithoutClaimBeforeAttempt": true
+  }
+}

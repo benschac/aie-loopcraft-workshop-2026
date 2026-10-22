@@ -1,6 +1,9 @@
 # Loopcraft workshop shell
 # Kept deliberately small: fast startup, useful completion, no surprise course magic.
 
+# Keep the writable Pi installation ahead of the image copy in new Herdr panes.
+export PATH="$HOME/.pi/npm/bin:$PATH"
+
 export EDITOR="${EDITOR:-nano}"
 export VISUAL="${VISUAL:-$EDITOR}"
 export PAGER="${PAGER:-less}"

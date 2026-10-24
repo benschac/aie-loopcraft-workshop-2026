@@ -4,4 +4,5 @@ import core from "ultracite/oxlint/core";
 export default defineConfig({
   env: { browser: false, node: true },
   extends: [core],
+  options: { typeAware: true },
 });

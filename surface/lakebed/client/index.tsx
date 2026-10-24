@@ -61,6 +61,8 @@ export const App = () => {
         if (!response.ok) {
           throw new Error(await response.text());
         }
+        // The local endpoint owns Effect validation; keep that dependency out of the capsule.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
         const value = (await response.json()) as IssueProjection;
         if (
           !value.complete ||
@@ -83,7 +85,9 @@ export const App = () => {
       }
     };
     void load();
-    return () => controller.abort();
+    return () => {
+      controller.abort();
+    };
   }, [refresh]);
 
   return (
@@ -101,7 +105,9 @@ export const App = () => {
               key={mode}
               aria-pressed={view === mode}
               className="rounded border border-neutral-500 px-4 py-2 aria-pressed:bg-sky-900"
-              onClick={() => setView(mode)}
+              onClick={() => {
+                setView(mode);
+              }}
             >
               {mode}
             </button>
@@ -110,13 +116,15 @@ export const App = () => {
             type="button"
             disabled={loading}
             className="rounded border px-4 py-2 disabled:opacity-50"
-            onClick={() => setRefresh((value) => value + 1)}
+            onClick={() => {
+              setRefresh((value) => value + 1);
+            }}
           >
             Refresh from file
           </button>
         </nav>
         {loading && <p role="status">Reading and validating the event file…</p>}
-        {error && (
+        {error !== null && error !== "" && (
           <div role="alert">
             <h2 className="text-xl text-red-300">Stopped — no cards shown</h2>
             <pre className="whitespace-pre-wrap">{error}</pre>

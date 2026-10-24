@@ -70,7 +70,10 @@ const latestReceipt = async (fileRead: string, receiptDirectory: string) => {
     names
       .toSorted()
       .filter((name) => /^check-.*\.json$/u.test(name))
-      .map((name) => loadReceipt(path.join(receiptDirectory, name), fileRead))
+      .map(
+        async (name) =>
+          await loadReceipt(path.join(receiptDirectory, name), fileRead)
+      )
   );
   for (const receipt of receipts) {
     if (

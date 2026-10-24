@@ -25,7 +25,7 @@ const main = async () => {
     {
       ...report,
       checkedAt: new Date().toISOString(),
-      lastCommand: `pnpm run issues:check ${JSON.stringify(fileRead)}${receiptFile ? " --receipt" : ""}`,
+      lastCommand: `pnpm run issues:check ${JSON.stringify(fileRead)}${receiptFile === null ? "" : " --receipt"}`,
       receiptFile,
       sourceSha256: createHash("sha256").update(text).digest("hex"),
       statusVersion: 1,

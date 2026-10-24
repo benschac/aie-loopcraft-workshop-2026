@@ -14,7 +14,10 @@ These are the scripts the Lesson 02 pass adds to the product `package.json`. Kee
 the workshop web scripts intact alongside them.
 
 - `pnpm run typecheck` — TypeScript 7 native preview through `tsgo`, no emit.
-- `pnpm run lint` — Oxlint with the Ultracite core preset.
+- `pnpm run lint` — Oxlint with the Ultracite core preset and type-aware rules
+  through `oxlint-tsgolint`, including checks for unhandled promises and unsafe
+  typed operations. `options.typeAware` in `oxlint.config.ts` enables these rules
+  for both the direct lint command and `ultracite:check`.
 - `pnpm run format` / `pnpm run format:check` — Oxfmt with the Ultracite formatter
   preset; the check-only variant is for hooks and CI.
 - `pnpm run ultracite:check` — Ultracite check over source and config paths.
@@ -48,6 +51,10 @@ from Pi, Zed, or another tool:
 
 - **pre-commit:** `pnpm run hooks:pre-commit` runs typecheck, lint, and format checks.
 - **pre-push:** `pnpm run hooks:pre-push` runs the full product check, including tests.
+
+Both hooks inherit the Ultracite presets and type-aware linting through these
+scripts. Formatting stays check-only: run `pnpm run format` to apply fixes, review
+the diff, then retry the commit. Hooks never stage changes for you.
 
 The commands check the whole product scope, not just staged paths. They do not
 format, stage, commit, or push files. Hooks are local safeguards and can be

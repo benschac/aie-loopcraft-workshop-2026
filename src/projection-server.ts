@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { createServer } from "node:http";
+import type { IncomingMessage, ServerResponse } from "node:http";
 
 import { readCheckerStatus } from "./checker-status.ts";
 import { projectIssues } from "./issue-projection.ts";
@@ -8,14 +9,21 @@ import { projectIssues } from "./issue-projection.ts";
 export const createProjectionServer = (
   fileRead: string,
   receiptDirectory?: string
-) =>
-  createServer(async (request, response) => {
+) => {
+  const handleRequest = async (
+    request: IncomingMessage,
+    response: ServerResponse
+  ) => {
     const { origin } = request.headers;
-    if (origin && !/^http:\/\/(?:localhost|127\.0\.0\.1):3000$/u.test(origin)) {
+    if (
+      origin !== undefined &&
+      origin !== "" &&
+      !/^http:\/\/(?:localhost|127\.0\.0\.1):3000$/u.test(origin)
+    ) {
       response.writeHead(403).end();
       return;
     }
-    if (origin) {
+    if (origin !== undefined && origin !== "") {
       response.setHeader("Access-Control-Allow-Origin", origin);
       response.setHeader("Vary", "Origin");
     }
@@ -54,4 +62,14 @@ export const createProjectionServer = (
         })
       );
     }
+  };
+  return createServer((request, response) => {
+    // Node's callback must return void; consume handler rejections at this boundary.
+    // oxlint-disable-next-line promise/prefer-await-to-callbacks, promise/prefer-await-to-then
+    void handleRequest(request, response).catch((error: unknown) => {
+      response.destroy(
+        error instanceof Error ? error : new Error(String(error))
+      );
+    });
   });
+};

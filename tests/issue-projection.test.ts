@@ -62,7 +62,7 @@ test("HTTP read uses fresh file content, refuses writes and origins, and fails c
   await once(server, "listening");
   try {
     const address = server.address();
-    assert.ok(address && typeof address !== "string");
+    assert.ok(address !== null && typeof address !== "string");
     const url = `http://127.0.0.1:${address.port}/api/issues`;
     const response = await fetch(url, {
       headers: { Origin: "http://localhost:3000" },

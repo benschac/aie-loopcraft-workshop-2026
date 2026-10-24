@@ -19,7 +19,7 @@ the workshop web scripts intact alongside them.
   typed operations. `options.typeAware` in `oxlint.config.ts` enables these rules
   for both the direct lint command and `ultracite:check`.
 - `pnpm run format` / `pnpm run format:check` — Oxfmt with the Ultracite formatter
-  preset; the check-only variant is for hooks and CI.
+  preset; the check-only variant is for validation and CI.
 - `pnpm run ultracite:check` — Ultracite check over source and config paths.
 - `pnpm test` — Vitest running TypeScript tests directly.
 - `pnpm run check` — typecheck, lint, format check, and tests in one gate.
@@ -49,26 +49,33 @@ pnpm run hooks:install
 `lefthook.yml` runs these ordinary Git hooks, regardless of whether edits came
 from Pi, Zed, or another tool:
 
-- **pre-commit:** `pnpm run hooks:pre-commit` runs typecheck, lint, and format checks.
+- **pre-commit:** Oxfmt formats staged product source/config files and Lefthook
+  re-stages the fixes, then `pnpm run hooks:pre-commit` runs whole-product
+  typecheck, lint, and format checks. The steps run in order and stop on failure.
 - **pre-push:** `pnpm run hooks:pre-push` runs the full product check, including tests.
 
-Both hooks inherit the Ultracite presets and type-aware linting through these
-scripts. Formatting stays check-only: run `pnpm run format` to apply fixes, review
-the diff, then retry the commit. Hooks never stage changes for you.
+Both hooks inherit the Ultracite presets and type-aware linting. Normal commits
+auto-format the staged files in the same scope as `pnpm run format`; no separate
+format command or second `git add` is needed. Lefthook hides unstaged changes in
+partially staged files while the hook runs and restores them afterward. A restore
+conflict stops the commit for inspection.
 
-The commands check the whole product scope, not just staged paths. They do not
-format, stage, commit, or push files. Hooks are local safeguards and can be
-bypassed; they are not a substitute for CI or running checks during an edit.
+Only the auto-format step filters staged paths; the quality gates still check
+the whole product scope, including the Lakebed capsule. Hooks are local
+safeguards and can be bypassed; they are not a substitute for CI or running
+checks during an edit.
 
-Verify without staging or committing anything:
+Run the hooks manually without updating the index or creating a commit
+(the pre-commit command still formats matching working files):
 
 ```sh
-pnpm exec lefthook run pre-commit --all-files
+pnpm exec lefthook run pre-commit --all-files --no-stage-fixed
 pnpm exec lefthook run pre-push --all-files
 ```
 
 Use `--all-files` for manual verification: an empty index may otherwise cause
-Lefthook to skip pre-commit. A skipped gate is not a passing check.
+Lefthook to skip pre-commit. Pair it with `--no-stage-fixed` so the auto-format
+step does not stage files you did not select. A skipped gate is not a passing check.
 `tests/lakebed-typecheck.test.ts` also proves that the real capsule configuration
 accepts valid Preact JSX and rejects an incorrectly typed JSX prop.
 

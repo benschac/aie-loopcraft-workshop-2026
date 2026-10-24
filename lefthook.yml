@@ -1,7 +1,18 @@
-# Whole-project gates: no staged-file filters that can silently skip the capsule.
+# Format staged product files, then check the whole product scope.
 pre-commit:
+  piped: true
   commands:
+    format:
+      priority: 1
+      glob:
+        - "{src,tests}/**"
+        - "surface/lakebed/{client,server,shared}/**"
+        - "surface/lakebed/tsconfig.json"
+        - "{package.json,tsconfig.json,oxlint.config.ts,oxfmt.config.ts,vitest.config.ts,lefthook.yml,pnpm-workspace.yaml}"
+      run: pnpm exec oxfmt {staged_files}
+      stage_fixed: true
     quality:
+      priority: 2
       run: pnpm run hooks:pre-commit
 
 pre-push:
